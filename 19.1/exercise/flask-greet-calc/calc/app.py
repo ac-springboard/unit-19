@@ -18,6 +18,11 @@ def r_root():
             <a href="/sub?a=10&b=5">Subtract: 10 - 5</a><br />
             <a href="/mult?a=10&b=10">Multiply: 10 * 10</a><br />
             <a href="/div?a=10&b=5">Divide: 10 / 5</a><br />
+            <h3>Navigator/math</h3>
+            <a href="/math/add?a=10&b=10">Add: 10 + 10</a><br />
+            <a href="/math/sub?a=10&b=5">Subtract: 10 - 5</a><br />
+            <a href="/math/mult?a=10&b=10">Multiply: 10 * 10</a><br />
+            <a href="/math/div?a=10&b=5">Divide: 10 / 5</a><br />
         </body>
     </html>
     """
@@ -51,4 +56,9 @@ def r_div():
     return str(div(a, b))
 
 
-
+@app.route("/math/<operation>")
+def math(operation):
+    op = globals()[operation]
+    a = int(req.args['a'])
+    b = int(req.args['b'])
+    return str(op(a, b))
