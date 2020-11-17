@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Madlibs</title>
+		<link rel="stylesheet" href="../static/app.css">
+	</head>
+	<body>
+		<div id="form_div">
+			<form action="/story" method="POST">
+				{% for p in par %}
+				<!--<div class="input_params">-->
+					<label class="input_label" for="{{p}}">{{p}}:</label>
+					<input class="input_value" id="{{p}}" value="{{par[p]}}"/>
+					<br/>
+					{% endfor %}
+				<!--</div>-->
+				<button type="submit">Submit</button>
+			</form>
+		</div>
+	</body>
+</html>
