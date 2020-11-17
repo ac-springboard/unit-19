@@ -7,16 +7,17 @@
 	</head>
 	<body>
 		<div id="form_div">
-			<form action="/story" method="POST">
+			<form action="/story">
 				{% for p in par %}
-				<!--<div class="input_params">-->
-					<label class="input_label" for="{{p}}">{{p}}:</label>
-					<input class="input_value" id="{{p}}" value="{{par[p]}}"/>
+					<label for="{{p}}">{{p}}:</label>
+					<input id="{{p}}" name="{{p}}" value="{{par[p]}}"/>
 					<br/>
 					{% endfor %}
-				<!--</div>-->
 				<button type="submit">Submit</button>
 			</form>
+		</div>
+		<div id="story_div">
+
 		</div>
 	</body>
 </html>
