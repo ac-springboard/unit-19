@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<section>
+	<header>
+		<p>{{ survey_title }}</p>
+	</header>
+	<article>
+		<header>
+			<p>{{ question_statement }}</p>
+		</header>
+		<form action="/questions/{{ next }}">
+			{% for answer in question_choices %}
+			<input type="radio">{{ answer }}
+			{% endfor%}
+			<button type="submit">Submit and Next</button>
+		</form>
+	</article>
+</section>
+
+{% endblock %}
