@@ -10,9 +10,9 @@
 		<header>
 			<p>{{ question_statement }}</p>
 		</header>
-		<form action="/questions/{{ next }}">
+		<form action="/answer/{{ question_number }}" method="POST">
 			{% for answer in question_choices %}
-			<input type="radio">{{ answer }}
+			<input type="radio" name="answer">{{ answer }}</input>
 			{% endfor%}
 			<button type="submit">Submit and Next</button>
 		</form>
