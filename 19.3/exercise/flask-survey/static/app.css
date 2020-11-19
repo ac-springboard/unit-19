@@ -1,19 +1,98 @@
-.message{
-	margin-top: 1.0rem;
-	background-color: lightyellow;
-	border-radius: 0.3rem;
+html{
+	width            : 100%;
+	height           : 100%;
+	}
+
+body {
+	width            : 100%;
+	height           : 100%;
+	background-size  : cover;
+	background-image : url("https://img.wallpapersafari.com/desktop/1920/1080/84/99/D3e06I.png");
+	}
+
+input{
+
+	}
+
+button {
+	color: #fff !important;
+	text-transform: uppercase;
+	text-decoration: none;
+	background: #ed3330;
+	padding: 20px;
+	border-radius: 5px;
+	display: inline-block;
+	border: none;
+	/*transition: all 0.4s ease 0s;*/
+	font-size: 1.2rem;
+	margin-top: 2.0rem;
+	}
+
+.survey_title {
+	width: 110.3%;
+	background-color: lightblue;
+	border-top-left-radius: 1.0rem;
+	border-top-right-radius: 1.0rem;
+	margin-top: -5.2%;
+	margin-left: -5.2%;
 	text-align: center;
-	padding: 0.3rem;
-	line-height: 2.0rem;
-	font-size: 1.3rem;
+	color: white;
+	font-size: 4rem;
+	text-shadow: 0.1rem 0.1rem 0.1rem grey;
+	}
+
+.instructions {
+	text-transform: uppercase;
+	font-weight: bold;
+	}
+
+.survey_instructions {
+
+	}
+
+.main {
+	width: 75%;
+	border: 0.1rem solid lightgray;
+	border-radius: 1.0rem;
+	height: 75%;
+	margin: 0 auto;
+	background-color: rgba( 0,83,146, 0.1);
+	padding: 3rem;
+	line-height: 4rem;
+	font-size: 2rem;
+	display: block;
+	}
+.question_statement{
+	font-weight: bolder;
+	}
+.answer_option{
+
+	}
+
+.main_content {
+
+	}
+
+.thankyou{
+
+	}
+
+.message {
+	margin-top       : 1.0rem;
+	background-color : lightyellow;
+	border-radius    : 0.3rem;
+	text-align       : center;
+	padding          : 0.3rem;
+	line-height      : 2.0rem;
+	font-size        : 1.3rem;
 	}
 
 .error {
-	border: 0.1rem solid darkred;
-	color: darkred;
+	border : 0.1rem solid darkred;
+	color  : darkred;
 	}
 
-.top_message{
-	border: 0.1rem solid darkgreen;
-	color: darkgreen;
+.top_message {
+	border : 0.1rem solid darkgreen;
+	color  : darkgreen;
 	}

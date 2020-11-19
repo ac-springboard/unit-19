@@ -1,21 +1,16 @@
 {% extends 'base.html' %}
 
 {% block main %}
-<section>
-	<header>
-		<p>{{ survey_title }}</p>
-	</header>
-	<article>
-		<header>
-			<p>{{ question_statement }}</p>
-		</header>
-		<form action="/answer/{{ question_number }}" method="GET">
-			{% for answer in question_choices %}
-			<input type="radio" name="answer">{{ answer }}</input>
-			{% endfor%}
-			<button type="submit">Submit and Next</button>
-		</form>
-	</article>
-</section>
+<div class="question_statement">{{ question_statement }}</div>
+<form action="/answer" method="GET">
+	<div class="answer_options">
+		{% for answer in question_choices %}
+		<div>
+			<input type="radio" name="answer" value="{{answer}}">{{ answer }}</input>
+		</div>
+		{% endfor%}
+	</div>
+	<button type="submit">Submit and Next</button>
+</form>
 
 {% endblock %}

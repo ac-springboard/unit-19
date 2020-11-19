@@ -2,19 +2,10 @@
 
 {% block main %}
 
-<section>
-	<header>
-		<p>{{ survey_title }} - {{ page }}</p>
-	</header>
-	<article>
-		<header>
-			<p>Instructions</p>
-		</header>
-		<p>{{ survey_instructions }}</p>
-	</article>
-	<form action="/questions/0">
-		<button type="submit">Start the Survey</button>
-	</form>
-</section>
+<div class="instructions">Instructions</div>
+<div class="survey_instructions">{{ survey_instructions }}</div>
+<form action="/questions">
+	<button type="submit">Start the Survey</button>
+</form>
 
 {% endblock %}
