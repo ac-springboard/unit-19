@@ -2,7 +2,7 @@
 
 {% block main %}
 <div class="question_statement">{{ question_statement }}</div>
-<form action="/answer" method="GET">
+<form action="/answer" method="POST">
 	<div class="answer_options">
 		{% for answer in question_choices %}
 		<div>

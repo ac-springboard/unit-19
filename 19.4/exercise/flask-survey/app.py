@@ -1,4 +1,5 @@
-from flask import Flask, request, render_template, redirect, flash
+from flask import Flask, request, render_template, redirect, flash, session, url_for, make_response
+
 # from flask_debugtoolbar import DebugToolbarExtension
 from surveys import Survey, satisfaction_survey as satisfaction
 
@@ -10,7 +11,7 @@ app.config['SECRET_KEY'] = 'password123'
 
 # GLOBAL VARIABLES
 
-responses = list()
+# responses = list()
 survey = Survey(satisfaction.title, satisfaction.instructions, satisfaction.questions)
 thankyou_statement = "Thank you!"
 
@@ -19,7 +20,7 @@ thankyou_statement = "Thank you!"
 
 @app.route('/')
 def root_view():
-    responses.clear();
+    session['responses'] = list()
     return render_template('root.html',
                            survey_title=survey.title,
                            survey_instructions=survey.instructions,
@@ -27,7 +28,7 @@ def root_view():
                            page_title='Survey Home')
 
 
-@app.route('/questions')
+@app.route('/questions', methods=["POST"])
 def questions_view():
     if is_this_last_question():
         congrats = """
@@ -38,6 +39,7 @@ def questions_view():
         congrats = None
 
     question_number = get_this_question_number() - 1
+
     return render_template('questions.html',
                            survey_title=survey.title,
                            question_statement=f"{question_number + 1}. {survey.questions[question_number].question}",
@@ -47,35 +49,32 @@ def questions_view():
                            page_title=f"Question #{question_number + 1}")
 
 
-@app.route("/answer", methods=['GET'])
+@app.route("/answer", methods=["POST"])
 def answer_service():
     if is_invalid_request():
         return redirect('/')
 
     try:
-        if request.method == "GET":
-            answer = request.args['answer']
-        else:
-            answer = request.form['answer']
+        answer = request.form['answer']
+        responses = session['responses']
         responses.append(answer)
-        print(answer)
-        print(responses)
+        session['responses'] = responses
     except Exception as e:
         flash('Something seems to be wrong. Have you answered the question?', ['questions_page', 'error'])
         flash("""If you have answered the question, 
         please contact Joe Biden and Kamala Harris
         at the White House on Jan 20, 2021 to file your complaint.""")
-        return redirect('/questions')
+        return redirect(url_for('questions_view'), code=307)
 
     if is_last_answered_question():
         return redirect('/thankyou')
 
-    return redirect('/questions')
+    return redirect(url_for('questions_view'), code=307)
 
 
 @app.route("/thankyou")
 def thankyou_view():
-    responses.clear()
+    session['responses'] = list()
     return render_template('thankyou.html',
                            survey_title=survey.title,
                            thankyou_statement=thankyou_statement,
@@ -94,11 +93,12 @@ def is_invalid_request():
 
 
 def is_survey_closed():
-    return len(responses) == len(survey.questions)
+    return len(session['responses']) == len(survey.questions)
 
 
 def get_question_number():
-    return len(responses)
+    question_number = len(session['responses'])
+    return question_number
 
 
 def is_this_last_question():
