@@ -1,0 +1,19 @@
+.message{
+	margin-top: 1.0rem;
+	background-color: lightyellow;
+	border-radius: 0.3rem;
+	text-align: center;
+	padding: 0.3rem;
+	line-height: 2.0rem;
+	font-size: 1.3rem;
+	}
+
+.error {
+	border: 0.1rem solid darkred;
+	color: darkred;
+	}
+
+.top_message{
+	border: 0.1rem solid darkgreen;
+	color: darkgreen;
+	}

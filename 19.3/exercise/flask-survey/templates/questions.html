@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 {% block main %}
-
 <section>
 	<header>
 		<p>{{ survey_title }}</p>
@@ -10,7 +9,7 @@
 		<header>
 			<p>{{ question_statement }}</p>
 		</header>
-		<form action="/answer/{{ question_number }}" method="POST">
+		<form action="/answer/{{ question_number }}" method="GET">
 			{% for answer in question_choices %}
 			<input type="radio" name="answer">{{ answer }}</input>
 			{% endfor%}

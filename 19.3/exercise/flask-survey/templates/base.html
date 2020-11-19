@@ -3,10 +3,24 @@
 	<head>
 		<meta charset="UTF-8">
 		<link rel="icon" type="image/png" href="../static/favicon.png"/>
+		<link rel="stylesheet" href="../static/app.css">
 		<title>{% block page_title %}{% endblock %}</title>
 	</head>
 	<body>
+		{% if top_message %}
+		<div class="message top_message">{{ top_message }}</div>
+		{% endif %}
 		{% block main %}
 		{% endblock %}
+		{% with msgs = get_flashed_messages(with_categories=true) %}
+		{% if msgs and msgs[0][0][0] == page_label %}
+		<!--<h3>{{ msgs[0][0][0] }} - {{ page_label }} - {{ msgs[0][0][1]}}</h3>-->
+		<footer class="message {{ msgs[0][0][1] }}">
+			{% for cat, msg in msgs %}
+			<div>{{ msg }}</div>
+			{% endfor %}
+		</footer>
+		{% endif %}
+		{% endwith %}
 	</body>
 </html>
