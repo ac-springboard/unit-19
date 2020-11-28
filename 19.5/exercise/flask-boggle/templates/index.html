@@ -25,54 +25,54 @@
 		<div id="main">
 			<div class="fluid-container">
 				<div class="{{ row_class }}">
-					<div id="above_timer" class="col-{{ lateral_col_width }} m-1 align-self-center">
+					<div id="above_timer" class="col-{{ lateral_area_width_in_cols }} m-1 align-self-center">
 						<div id="bt-start" class="btn btn-success">Start</div>
 						<div id="bt-cancel" class="btn btn-danger">Cancel</div>
 					</div>
-					<div id="above_board" class="col-{{ square_width }} border rounded m-1">
+					<div id="above_board" class="col-{{ board_size_in_cols }} border rounded m-1">
 						above board
 					</div>
-					<div id="above_table" class="col-{{ lateral_col_width }} border rounded
+					<div id="above_table" class="col-{{ lateral_area_width_in_cols }} border rounded
 				m-1">
 						above table
 					</div>
 				</div>
 				<div class="{{ row_class }}">
-					<div id="timer_container" class="col-{{ lateral_col_width }} align-self-center">
+					<div id="timer_container" class="col-{{ lateral_area_width_in_cols }} align-self-center">
 						<!--<canvas id="timer_canvas" width="1" height="1"></canvas>-->
 						<div id="timer_div" class=""></div>
 					</div>
-					<div id="board" class="col-{{ square_width }} border rounded m-1">
+					<div id="board" class="col-{{ board_size_in_cols }} border rounded m-1">
 						{% include 'board.html' %}
 					</div>
-					<div id="table" class="col-{{ lateral_col_width }} border rounded m-1">
+					<div id="table" class="col-{{ lateral_area_width_in_cols }} border rounded m-1">
 
 					</div>
 				</div>
 				<div class="{{ row_class }}">
-					<div id="below_timer" class="col-{{ lateral_col_width }} border rounded m-1">
+					<div id="below_timer" class="col-{{ lateral_area_width_in_cols }} border rounded m-1">
 						<select id="board-and-times" class="custom-select">
 							{% for k, v in board_and_time.items() %}
 								<option value='{{ k }}' time={{ v }}>{{ k }} ({{ v }}s)</option>
 							{% endfor %}
 						</select>
-						{% if default_grid %}
-							<script type="text/javascript">
-                $('#board-and-times').val('{{ default_grid }}');
-								let initial_time = {{  board_and_time.get(default_grid) }};
-							</script>
-						{% endif %}
+
 					</div>
-					<div id="below_board" class="col-{{ square_width }} border rounded m-1">
+					<div id="below_board" class="col-{{ board_size_in_cols }} border rounded m-1">
 						below board
 					</div>
-					<div id="below_table" class="col-{{ lateral_col_width }} border rounded m-1">
+					<div id="below_table" class="col-{{ lateral_area_width_in_cols }} border rounded m-1">
 
 					</div>
 				</div>
 			</div>
 		</div>
-		#
+		{% block init %}
+			<script type="text/javascript">
+        let initial_time ={{ initial_time }};
+        let grid_size    = '{{ grid_size }}';
+			</script>
+		{% endblock %}
 		<script type="text/javascript" src="../static/js/app.js"></script>
 		<!-- <script type="text/javascript" src="../static/js/timer.js"></script>-->
 	</body>

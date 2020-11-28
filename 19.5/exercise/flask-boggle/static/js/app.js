@@ -3,12 +3,12 @@ const $BT_START        = $('#bt-start');
 const $BT_CANCEL       = $('#bt-cancel');
 const $BOARD_AND_TIMES = $('#board-and-times');
 
+$(document).ready(function () {
+  $BT_CANCEL.hide();
+  selectToInitialTime();
+  updateTime();
+});
 // let initial_time = 60;
-updateTime(initial_time);
-$BT_CANCEL.hide();
-// $(document).ady(function(){
-//   $('#board-and-times').val('4x4');
-// });
 
 let timer = function (duration) {
   let current = duration - 1000;
@@ -32,9 +32,13 @@ let timer = function (duration) {
   };
 };
 
-function updateTime( time ){
-  initial_time = time;
-  $TIMER_DIV.text(`${time}s`);
+function selectToInitialTime(){
+  $('#board-and-times').val(grid_size);
+}
+
+function updateTime() {
+  // initial_time = time;
+  $TIMER_DIV.text(`${initial_time}s`);
 }
 
 $BT_START.on('click', function () {
@@ -42,15 +46,14 @@ $BT_START.on('click', function () {
   tid = t.start();
   $BT_START.hide();
   $BT_CANCEL.show();
-  $BOARD_AND_TIMES.attr('disabled', 'disabled')
+  $BOARD_AND_TIMES.attr('disabled', 'disabled');
 });
 
 $BT_CANCEL.on('click', function () {
-  location.reload();
+  window.location.href = `/?grid_size=${grid_size}`;
 });
 
-$BOARD_AND_TIMES.on('change', function(){
-  const grid = $(this).val();
-  const time = $(this).find( 'option[value='+grid+']').attr('time');
-  updateTime( time )
+$BOARD_AND_TIMES.on('change', function () {
+  const grid           = $(this).val();
+  window.location.href = `/?grid_size=${grid}`;
 });

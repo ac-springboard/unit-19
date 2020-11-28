@@ -13,34 +13,42 @@ app.config['SECRET_KEY'] = 'password123'
 ROW_CLASS = "row d-flex flex-nowrap justify-content-center"
 
 # Fixed due my choice of the design
-LATERAL_COL_WIDTH = 3
+LATERAL_AREA_WIDTH_IN_COLS = 3
 BOARD_MIN_LETTERS_PER_SIDE = 3
 BOARD_MAX_LETTERS_PER_SIDE = 6
 # <letters: cols>
-BOARD_SIZE_PER_NUMBER_OF_LETTERS = {3: 6, 4: 4, 5: 5, 6: 6}
+BOARD_SIZE_IN_COLS_PER_GRID_SIZE = {'3x3': 6,  '4x4': 4,  '5x5': 5,  '6x6': 6}
+BOARD_AND_TIME =                   {'3x3': 45, '4x4': 60, '5x5': 75, '6x6': 90}
 
-#
-#
-
-board_and_time = {
-    '3x3': 45, '4x4': 60, '5x5': 75, '6x6': 90
-}
-
-# This is the variable that triggers layout
-DEFAULT_NUMBER_OF_LETTERS_PER_SIDE = 4
+# This is the variable that triggers the layout
+DEFAULT_GRID = '4x4'
 
 # Calculated Values
-default_grid = f'{DEFAULT_NUMBER_OF_LETTERS_PER_SIDE}x{DEFAULT_NUMBER_OF_LETTERS_PER_SIDE}'
-default_time = board_and_time.get(default_grid)
-board_number_of_letters_per_side = DEFAULT_NUMBER_OF_LETTERS_PER_SIDE
-board_size_in_cols = BOARD_SIZE_PER_NUMBER_OF_LETTERS.get(board_number_of_letters_per_side)
-letter_cell_size_in_cols = board_size_in_cols / board_number_of_letters_per_side
+# board_number_of_letters_per_side = parseGrid( DEFAULT_GRID )
+# board_size_in_cols = BOARD_SIZE_PER_GRID_SIZE.get(DEFAULT_NUMBER_OF_LETTERS_PER_SIDE)
+# letter_cell_size_in_cols = board_size_in_cols / board_number_of_letters_per_side
 
 
 @app.route('/')
 def root_view():
-    return render_template('index.html', square_width=board_size_in_cols,
-                           lateral_col_width=LATERAL_COL_WIDTH,
+    grid_size = request.args.get('grid_size', DEFAULT_GRID)
+    print('grid_size', grid_size)
+    board_size_in_cols = get_board_size_in_cols(grid_size)
+    return render_template('index.html', board_size_in_cols=board_size_in_cols,
+                           lateral_area_width_in_cols=LATERAL_AREA_WIDTH_IN_COLS,
                            row_class=ROW_CLASS,
-                           board_and_time=board_and_time,
-                           default_grid=default_grid)
+                           board_and_time=BOARD_AND_TIME,
+                           grid_size=grid_size,
+                           initial_time=BOARD_AND_TIME.get(grid_size))
+
+
+# def setup_variables( grid_size ):
+def get_board_size_in_cols(grid_size):
+    board_size = BOARD_SIZE_IN_COLS_PER_GRID_SIZE.get(grid_size)
+    return board_size
+
+
+def parseGrid(grid_size):
+    letters_per_side = grid_size.split('x')
+    print(letters_per_side)
+    return letters_per_side
