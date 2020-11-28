@@ -75,7 +75,7 @@ def answer_service():
 @app.route("/thankyou")
 def thankyou_view():
     session['responses'] = list()
-    return render_template('thankyou.html',
+    return render_template('thankyou.html',w
                            survey_title=survey.title,
                            thankyou_statement=thankyou_statement,
                            page_label='thankyou_page')
