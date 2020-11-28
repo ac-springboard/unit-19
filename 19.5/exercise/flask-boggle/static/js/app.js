@@ -6,7 +6,7 @@ let timer = function(duration) {
 		start: function () {
 			timer_id = setInterval(() => {
 
-				timer_div.innerText = current;
+				timer_div.innerText = `${current/1000}s`;
 				current -= 1000
 				if ( current < 0 ){
 					console.log( 'this', this )

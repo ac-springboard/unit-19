@@ -1,7 +1,44 @@
-.container>div>div{
-	/*background-color: lightblue;*/
+html, body {
+	width : 100%;
 	}
 
-#timer{
-	/*height: 75vh;*/
+/*.container > div > div {*/
+/*	background-color: lightblue;*/
+/*	}*/
+
+#timer_div {
+	text-align : center;
+	/*padding: 2rem;*/
+	font-size: 2rem;
+	border: 1px solid red;
+	width: 6rem;
+	height: 6rem;
+	line-height: 6rem;
+	border-radius: 3rem;
+	margin: 0 auto;
+	}
+
+#timer_container{
+	padding: 0.75rem;
+	}
+
+#main{
+	/*border: 3px solid magenta;*/
+	text-align: center;
+	width: 100%;
+	padding-left: 10%;
+	padding-right: 10%;
+	}
+
+#main .fluid-container {
+	/*border     : 2px solid blue;*/
+	text-align : center !Important;
+	}
+
+#main .row{
+	/*border: 1px solid darkgreen;*/
+	}
+
+#main div[class^="col-"]{
+	border: 1px solid black !important;
 	}
