@@ -25,9 +25,9 @@
 		<div id="main">
 			<div class="fluid-container">
 				<div class="{{ row_class }}">
-					<div id="above_timer" class="col-{{ lateral_col_width }} border rounded
-				m-1">
-						<div id="start_bt">Start Game</div>
+					<div id="above_timer" class="col-{{ lateral_col_width }} m-1">
+						<div id="bt-start" class="btn btn-success">Start</div>
+						<div id="bt-cancel" class="btn btn-danger">Cancel</div>
 					</div>
 					<div id="above_board" class="col-{{ square_width }} border rounded m-1">
 						above board
@@ -38,7 +38,7 @@
 					</div>
 				</div>
 				<div class="{{ row_class }}">
-					<div id="timer_container" class="col-{{ lateral_col_width }} border rounded align-self-center">
+					<div id="timer_container" class="col-{{ lateral_col_width }} align-self-center">
 						<!--<canvas id="timer_canvas" width="1" height="1"></canvas>-->
 						<div id="timer_div" class=""></div>
 					</div>

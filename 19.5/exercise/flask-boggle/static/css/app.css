@@ -6,22 +6,6 @@ html, body {
 /*	background-color: lightblue;*/
 /*	}*/
 
-#timer_div {
-	text-align : center;
-	/*padding: 2rem;*/
-	font-size: 2rem;
-	border: 1px solid red;
-	width: 6rem;
-	height: 6rem;
-	line-height: 6rem;
-	border-radius: 3rem;
-	margin: 0 auto;
-	}
-
-#timer_container{
-	padding: 0.75rem;
-	}
-
 #main{
 	/*border: 3px solid magenta;*/
 	text-align: center;
@@ -40,5 +24,28 @@ html, body {
 	}
 
 #main div[class^="col-"]{
-	border: 1px solid black !important;
+	/*border: 1px solid black !important;*/
 	}
+
+#main div[id^="bt-"]{
+	/*border: 1px solid black !important;*/
+	width: 100%;
+	}
+
+#timer_div {
+	text-align : center;
+	/*padding: 2rem;*/
+	font-size: 2rem;
+	border: 1px solid red;
+	width: 6rem;
+	height: 6rem;
+	line-height: 6rem;
+	border-radius: 3rem;
+	margin: 0 auto;
+	}
+
+#timer_container{
+	padding: 0.75rem;
+	border: none !important;
+	}
+

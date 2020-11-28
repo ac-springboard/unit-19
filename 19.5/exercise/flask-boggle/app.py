@@ -24,6 +24,8 @@ board_number_of_letters_per_side = 3
 board_size = BOARD_SIZE_PER_NUMBER_OF_LETTERS.get(board_number_of_letters_per_side)
 letter_cell_size = board_size / board_number_of_letters_per_side
 
+# Timer
+
 
 @app.route('/')
 def root_view():
