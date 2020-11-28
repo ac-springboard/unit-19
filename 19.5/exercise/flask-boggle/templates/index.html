@@ -25,7 +25,7 @@
 		<div id="main">
 			<div class="fluid-container">
 				<div class="{{ row_class }}">
-					<div id="above_timer" class="col-{{ lateral_col_width }} m-1">
+					<div id="above_timer" class="col-{{ lateral_col_width }} m-1 align-self-center">
 						<div id="bt-start" class="btn btn-success">Start</div>
 						<div id="bt-cancel" class="btn btn-danger">Cancel</div>
 					</div>
@@ -51,17 +51,28 @@
 				</div>
 				<div class="{{ row_class }}">
 					<div id="below_timer" class="col-{{ lateral_col_width }} border rounded m-1">
-						below timer
+						<select id="board-and-times" class="custom-select">
+							{% for k, v in board_and_time.items() %}
+								<option value='{{ k }}' time={{ v }}>{{ k }} ({{ v }}s)</option>
+							{% endfor %}
+						</select>
+						{% if default_grid %}
+							<script type="text/javascript">
+                $('#board-and-times').val('{{ default_grid }}');
+								let initial_time = {{  board_and_time.get(default_grid) }};
+							</script>
+						{% endif %}
 					</div>
 					<div id="below_board" class="col-{{ square_width }} border rounded m-1">
 						below board
 					</div>
 					<div id="below_table" class="col-{{ lateral_col_width }} border rounded m-1">
-						below table
+
 					</div>
 				</div>
 			</div>
-		</div>#
+		</div>
+		#
 		<script type="text/javascript" src="../static/js/app.js"></script>
 		<!-- <script type="text/javascript" src="../static/js/timer.js"></script>-->
 	</body>

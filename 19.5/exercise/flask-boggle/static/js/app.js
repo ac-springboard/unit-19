@@ -1,10 +1,14 @@
-const $TIMER_DIV = $('#timer_div');
-const $BT_START  = $('#bt-start');
-const $BT_CANCEL = $('#bt-cancel');
-let initial_time = 60;
+const $TIMER_DIV       = $('#timer_div');
+const $BT_START        = $('#bt-start');
+const $BT_CANCEL       = $('#bt-cancel');
+const $BOARD_AND_TIMES = $('#board-and-times');
 
+// let initial_time = 60;
+updateTime(initial_time);
 $BT_CANCEL.hide();
-$TIMER_DIV.text(`${initial_time}s`);
+// $(document).ady(function(){
+//   $('#board-and-times').val('4x4');
+// });
 
 let timer = function (duration) {
   let current = duration - 1000;
@@ -28,19 +32,25 @@ let timer = function (duration) {
   };
 };
 
+function updateTime( time ){
+  initial_time = time;
+  $TIMER_DIV.text(`${time}s`);
+}
+
 $BT_START.on('click', function () {
-  t   = timer(60 * 1000);
+  t   = timer(initial_time * 1000);
   tid = t.start();
   $BT_START.hide();
   $BT_CANCEL.show();
-  $BT_CANCEL.on('click', function () {
-    // This works:
-    // t.cancel();
-    // $BT_START.show();
-    // $BT_CANCEL.hide();
+  $BOARD_AND_TIMES.attr('disabled', 'disabled')
+});
 
-    // But I prefer this in this particular exercise:
-    location.reload();
-  });
+$BT_CANCEL.on('click', function () {
+  location.reload();
+});
 
+$BOARD_AND_TIMES.on('change', function(){
+  const grid = $(this).val();
+  const time = $(this).find( 'option[value='+grid+']').attr('time');
+  updateTime( time )
 });
