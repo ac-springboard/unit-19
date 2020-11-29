@@ -41,12 +41,12 @@ html, body {
 #timer_div {
 	text-align    : center;
 	/*padding: 2rem;*/
-	font-size     : 2rem;
+	font-size     : 5vw;
 	border        : 1px solid red;
-	width         : 6rem;
-	height        : 6rem;
-	line-height   : 6rem;
-	border-radius : 3rem;
+	width         : 12vw;
+	height        : 12vw;
+	line-height   : 12vw;
+	border-radius : 6vw;
 	margin        : 0 auto;
 	}
 
@@ -87,11 +87,11 @@ html, body {
 	}
 
 .char{
-	font-size: 150% !important;
+	font-size: 4vw !important;
 	/*padding: 0 0 10% 50%!important;*/
-	textign: center
-	/*position: relative;*/
-	/*top: -50% !important;*/
-	/*transform: translateY(25%) !important;*/
+	text-align: center;
+	position: relative;
+	top: 50% !important;
+	transform: translateY(-50%) !important;
 	}
 
