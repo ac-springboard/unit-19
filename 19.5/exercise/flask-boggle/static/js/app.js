@@ -7,6 +7,8 @@ $(document).ready(function () {
   $BT_CANCEL.hide();
   selectToInitialTime();
   updateTime();
+  cellSize();
+  // $('.char_cell').css({"height": "30% !important", "background-color": "yellow"});
 });
 // let initial_time = 60;
 
@@ -32,7 +34,7 @@ let timer = function (duration) {
   };
 };
 
-function selectToInitialTime(){
+function selectToInitialTime() {
   $('#board-and-times').val(grid_size);
 }
 
@@ -57,3 +59,16 @@ $BOARD_AND_TIMES.on('change', function () {
   const grid           = $(this).val();
   window.location.href = `/?grid_size=${grid}`;
 });
+
+$(window).resize( cellSize );
+
+function cellSize() {
+  $('.char_cell').each(function () {
+    const w = $(this).width();
+    const h = $(this).height();
+    // console.log( 'w:', w, 'h:', h );
+    $(this).height(w);
+    // $(this).height($(this).width());
+
+  });
+}
