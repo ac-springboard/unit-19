@@ -28,15 +28,16 @@
 			<div class="fluid-container">
 				<div class="{{ row_class }}">
 					<div id="above_timer" class="col-{{ lateral_area_width_in_cols }} m-1 align-self-center">
-						<div id="bt-start" class="btn btn-success">Start</div>
-						<div id="bt-cancel" class="btn btn-danger">Cancel</div>
+						<div id="bt-start" class="btn  btn-control"></div>
+						<div id="bt-cancel" class="btn btn-control"></div>
+						<div id="bt-play-again" class="btn btn-control"></div>
 					</div>
 					<div id="above_board" class="col-{{ board_size_in_cols }} border rounded m-1">
-						above board
+						<div id="msg_area"></div>
 					</div>
 					<div id="above_table" class="col-{{ lateral_area_width_in_cols }} border rounded
 				m-1">
-						above table
+
 					</div>
 				</div>
 				<div class="{{ row_class }}">
@@ -53,7 +54,7 @@
 				</div>
 				<div class="{{ row_class }}">
 					<div id="below_timer" class="col-{{ lateral_area_width_in_cols }} border rounded m-1">
-						<select id="board-and-times" class="custom-select">
+						<select id="grids-and-times" class="custom-select">
 							{% for k, v in board_and_time.items() %}
 								<option value='{{ k }}' time={{ v }}>{{ k }} ({{ v }}s)</option>
 							{% endfor %}
@@ -61,10 +62,17 @@
 
 					</div>
 					<div id="below_board" class="col-{{ board_size_in_cols }} border rounded m-1">
-						below board
+						<div id="word_input_div">
+							<form id="word_form">
+								<div class="form-group">
+								<input class='form-control' name="word_input" value="" placeholder="Type a word..."/>
+								</div>
+								<input id="bt-word-submit" type="submit" class="btn" value="">
+							</form>
+						</div>
 					</div>
 					<div id="below_table" class="col-{{ lateral_area_width_in_cols }} border rounded m-1">
-
+						below table
 					</div>
 				</div>
 			</div>

@@ -1,4 +1,3 @@
-
 """Utilities related to Boggle game."""
 
 from random import choice
@@ -9,32 +8,35 @@ class Boggle():
 
     def __init__(self):
 
+        self.board = []
         self.words = self.read_dict("words.txt")
+
+    def set_number_of_chars_per_side(self, number_of_chars_per_side):
+        self.ncps = number_of_chars_per_side
 
     def read_dict(self, dict_path):
         """Read and return all words in dictionary."""
 
-        dict_file = open(dict_path)
-        words = [w.strip() for w in dict_file]
-        dict_file.close()
+        with open(dict_path) as dict_file:
+            words = [w.strip() for w in dict_file]
         return words
 
-    def make_board(self, number_of_chars_per_side):
+    def make_board(self):
         """Make and return a random boggle board."""
+        self.board = []
+        for _ in range(self.ncps):
+            row = [choice(string.ascii_uppercase) for i in range(self.ncps)]
+            self.board.append(row)
 
-        board = []
+        return self.board
 
-        for y in range(number_of_chars_per_side):
-            row = [choice(string.ascii_uppercase) for i in range(number_of_chars_per_side)]
-            board.append(row)
-
-        return board
-
-    def check_valid_word(self, board, word):
+    def check_valid_word(self, word):
         """Check if a word is a valid word in the dictionary and/or the boggle board"""
+        if len(word) > self.ncps ** 2:
+            return 'invalid-size'
 
         word_exists = word in self.words
-        valid_word = self.find(board, word.upper())
+        valid_word = self.find(word.upper())
 
         if word_exists and valid_word:
             result = "ok"
@@ -45,12 +47,12 @@ class Boggle():
 
         return result
 
-    def find_from(self, board, word, y, x, seen, n):
+    def find_from(self, word, y, x, seen):
         """Can we find a word on board, starting at x, y?
         n=number_of_chars_per_side - 1
         """
 
-        if x > n or y > n:
+        if x > self.ncps or y > self.ncps:
             return
 
         # This is called recursively to find smaller and smaller words
@@ -58,7 +60,7 @@ class Boggle():
 
         # Base case: this isn't the letter we're looking for.
 
-        if board[y][x] != word[0]:
+        if self.board[y][x] != word[0]:
             return False
 
         # Base case: we've used this letter before in this current path
@@ -94,54 +96,53 @@ class Boggle():
         seen = seen | {(y, x)}
 
         # adding diagonals
-
         if y > 0:
-            if self.find_from(board, word[1:], y - 1, x, seen):
+            if self.find_from(word[1:], y - 1, x, seen):
                 return True
 
-        if y < n:
-            if self.find_from(board, word[1:], y + 1, x, seen):
+        if y < self.ncps:
+            if self.find_from(word[1:], y + 1, x, seen):
                 return True
 
         if x > 0:
-            if self.find_from(board, word[1:], y, x - 1, seen):
+            if self.find_from(word[1:], y, x - 1, seen):
                 return True
 
-        if x < n:
-            if self.find_from(board, word[1:], y, x + 1, seen):
+        if x < self.ncps:
+            if self.find_from(word[1:], y, x + 1, seen):
                 return True
 
         # diagonals
         if y > 0 and x > 0:
-            if self.find_from(board, word[1:], y - 1, x - 1, seen):
+            if self.find_from(word[1:], y - 1, x - 1, seen):
                 return True
 
-        if y < n and x < n:
-            if self.find_from(board, word[1:], y + 1, x + 1, seen):
+        if y < self.ncps and x < self.ncps:
+            if self.find_from(word[1:], y + 1, x + 1, seen):
                 return True
 
-        if x > 0 and y < n:
-            if self.find_from(board, word[1:], y + 1, x - 1, seen):
+        if x > 0 and y < self.ncps:
+            if self.find_from(word[1:], y + 1, x - 1, seen):
                 return True
 
-        if x < n and y > 0:
-            if self.find_from(board, word[1:], y - 1, x + 1, seen):
+        if x < self.ncps and y > 0:
+            if self.find_from(word[1:], y - 1, x + 1, seen):
                 return True
         # Couldn't find the next letter, so this path is dead
 
         return False
 
-    def find(self, board, word, n):
-        """Can word be found in board?
+    def find(self, word):
+        """Can word be found in self.board?
         n=number_of_chars_per_side
         """
 
-        # Find starting letter --- try every spot on board and,
+        # Find starting letter --- try every spot on self.board and,
         # win fast, should we find the word at that place.
 
-        for y in range(0, n):
-            for x in range(0, n):
-                if self.find_from(board, word, y, x, seen=set()):
+        for y in range(0, self.ncps):
+            for x in range(0, self.ncps):
+                if self.find_from(word, y, x, seen=set()):
                     return True
 
         # We've tried every path from every starting square w/o luck.

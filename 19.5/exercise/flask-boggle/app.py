@@ -17,23 +17,12 @@ BOARD_MIN_chars_PER_SIDE = 3
 BOARD_MAX_chars_PER_SIDE = 6
 # <chars: cols>
 BOARD_SIZE_IN_COLS_PER_GRID_SIZE = {'3x3': 6, '4x4': 4, '5x5': 5, '6x6': 6}
-BOARD_AND_TIME = {'3x3': 45, '4x4': 60, '5x5': 75, '6x6': 90}
+BOARD_AND_TIME = {'3x3': 450, '4x4': 5, '5x5': 750, '6x6': 900}
 
 # This is the variable that triggers the layout
 DEFAULT_GRID = '4x4'
 
 
-# CONSONANT_LIST = list('bcdfghjklmnopqrstvwxyz')
-# VOWEL_LIST=list('aeiou');
-
-
-# Calculated Values
-# board_number_of_chars_per_side = parseGrid( DEFAULT_GRID )
-# board_size_in_cols = BOARD_SIZE_PER_GRID_SIZE.get(DEFAULT_NUMBER_OF_chars_PER_SIDE)
-# char_cell_size_in_cols = board_size_in_cols / board_number_of_chars_per_side
-
-
-# board=boggle_game.make_board();
 @app.route('/')
 def root_view():
     grid_size = request.args.get('grid_size', DEFAULT_GRID)
@@ -42,6 +31,7 @@ def root_view():
     number_of_chars_per_side = get_number_of_chars_per_side(grid_size)
     char_cell_size_in_cols = get_char_cell_size_in_cols(board_size_in_cols, grid_size)
     # char_cell_size_in_pct = get_char_cell_size_in_pct(number_of_chars_per_side)
+    boggle_game.set_number_of_chars_per_side(number_of_chars_per_side)
     board = make_empty_board(number_of_chars_per_side)
     return render_template('index.html', board_size_in_cols=board_size_in_cols,
                            number_of_chars_per_side=number_of_chars_per_side,
@@ -57,29 +47,30 @@ def root_view():
 
 @app.route('/chars/<int:number_of_chars_per_side>')
 def make_board_ajax(number_of_chars_per_side):
-    if number_of_chars_per_side == 0:
-        board = make_empty_board(number_of_chars_per_side)
-    else:
-        board = boggle_game.make_board(number_of_chars_per_side)
+    board = boggle_game.make_board()
     return render_template('board.html', board=board,
                            number_of_chars_per_side=number_of_chars_per_side)
 
 
+@app.route('/word/<word>')
+def check_valid_word_ajax(word):
+    result = boggle_game.check_valid_word(word)
+    # print('is_valid:', is_valid)
+    json_result = jsonify({'result': result})
+    return json_result
+
+
 def make_empty_board(number_of_chars_per_side):
-    board = [['🦉'] * (number_of_chars_per_side)] * number_of_chars_per_side
-    return board
+    return [['🦉'] * number_of_chars_per_side] * number_of_chars_per_side
 
 
-# def setup_variables( grid_size ):
 def get_board_size_in_cols(grid_size):
-    board_size = BOARD_SIZE_IN_COLS_PER_GRID_SIZE.get(grid_size)
-    return board_size
+    return BOARD_SIZE_IN_COLS_PER_GRID_SIZE.get(grid_size)
 
 
 def get_char_cell_size_in_cols(board_size_in_cols, grid_size):
     number_of_chars_per_side = get_number_of_chars_per_side(grid_size)
-    char_cell_size_in_cols = int(board_size_in_cols / number_of_chars_per_side)
-    return char_cell_size_in_cols
+    return int(board_size_in_cols / number_of_chars_per_side)
 
 
 # def get_char_cell_size_in_pct():
