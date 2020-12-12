@@ -17,7 +17,7 @@ BOARD_MIN_chars_PER_SIDE = 3
 BOARD_MAX_chars_PER_SIDE = 6
 # <chars: cols>
 BOARD_SIZE_IN_COLS_PER_GRID_SIZE = {'3x3': 6, '4x4': 4, '5x5': 5, '6x6': 6}
-BOARD_AND_TIME = {'3x3': 450, '4x4': 5, '5x5': 750, '6x6': 900}
+BOARD_AND_TIME = {'3x3': 450, '4x4': 500, '5x5': 750, '6x6': 900}
 
 # This is the variable that triggers the layout
 DEFAULT_GRID = '4x4'

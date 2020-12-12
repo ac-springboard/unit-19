@@ -52,7 +52,7 @@ class Boggle():
         n=number_of_chars_per_side - 1
         """
 
-        if x > self.ncps or y > self.ncps:
+        if x >= self.ncps or y >= self.ncps:
             return
 
         # This is called recursively to find smaller and smaller words
@@ -142,6 +142,7 @@ class Boggle():
 
         for y in range(0, self.ncps):
             for x in range(0, self.ncps):
+                print( x, y )
                 if self.find_from(word, y, x, seen=set()):
                     return True
 
