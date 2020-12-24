@@ -16,9 +16,22 @@ const $WORD_FORM       = $('#word_form');
 const $BOARD           = $('#board');
 const $MSG_AREA        = $('#msg_area');
 const $FRM             = $('form *');
+const $DEFINITIONS     = $('#definitions');
+
+let TOTAL     = 0;
+const HISTORY = [];
 
 const ENABLE  = true;
 const DISABLE = false;
+
+// const DICT_URL     = "https://www.dictionaryapi.com/api/v3/references/computer/json/computer?key=05c306a9-222f-46cd-a1e3-b9b51b472e4f";
+const DICT_DEFINITION_ENDPOINT     = "https://wordsapiv1.p.rapidapi.com/words/";
+const DICT_HEADERS = {
+  "Content-Type": "application/json",
+  "x-rapidapi-key": "181862af8fmshb9990531929a53dp1032ddjsn0c19d24edff3",
+  "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
+  "useQueryString": true
+};
 
 const MESSAGES = {
   start         : {text: 'Select the grid size and click on [Start]', type: 'success'},
@@ -73,10 +86,40 @@ function cellSize() {
 
 function checkValidWord(word) {
   $.get(`/word/${word}`, function (data) {
-    msg(data.result);
+    updateHistory(word, data.result);
   });
 }
 
+function updateHistory(word, result) {
+  let points = word.length;
+  if (result !== 'ok') {
+    points *= -1;
+    msg(result);
+  } else {
+    // $.get(DICT_URL.replace('<word>', word ))
+    $.ajax({
+       url: DICT_DEFINITION_ENDPOINT + word,
+      headers: DICT_HEADERS,
+     method: 'GET'
+    })
+     .done( function( res ){
+        console.log( "definitions:", res);
+        console.log( "results:", res.results);
+        updateDefinitions( res.results );
+    });
+  }
+  TOTAL += points;
+  HISTORY.push({word, points, total: TOTAL});
+  updateHistoryTable();
+}
+
+function updateDefinitions( definitions ){
+  $DEFINITIONS.text(definitions.map( res => res.definition));
+}
+
+function updateHistoryTable() {
+  console.log(HISTORY);
+}
 
 async function make_board_ajax() {
   $BOARD.load(`/chars/${number_of_chars_per_side}`);

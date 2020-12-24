@@ -142,7 +142,7 @@ class Boggle():
 
         for y in range(0, self.ncps):
             for x in range(0, self.ncps):
-                print( x, y )
+                print(x, y)
                 if self.find_from(word, y, x, seen=set()):
                     return True
 
