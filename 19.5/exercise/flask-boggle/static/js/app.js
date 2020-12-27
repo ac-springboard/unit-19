@@ -6,17 +6,19 @@
 //                                   //
 ///////////////////////////////////////
 
-const $TIMER_DIV       = $('#timer_div');
-const $BT_CANCEL       = $('#bt-cancel');
-const $BT_PLAY_AGAIN   = $('#bt-play-again');
-const $BT_START        = $('#bt-start');
-const $BT_WORD_SUBMIT  = $('#bt-word-submit');
-const $GRIDS_AND_TIMES = $('#grids-and-times');
-const $WORD_FORM       = $('#word_form');
-const $BOARD           = $('#board');
-const $MSG_AREA        = $('#msg_area');
-const $FRM             = $('form *');
-const $DEFINITIONS     = $('#definitions');
+const $TIMER_DIV        = $('#timer_div');
+const $BT_CANCEL        = $('#bt-cancel');
+const $BT_PLAY_AGAIN    = $('#bt-play-again');
+const $BT_START         = $('#bt-start');
+const $BT_WORD_SUBMIT   = $('#bt-word-submit');
+const $GRIDS_AND_TIMES  = $('#grids-and-times');
+const $WORD_FORM        = $('#word_form');
+const $BOARD            = $('#board');
+const $MSG_AREA         = $('#msg_area');
+const $FRM              = $('form *');
+const $CARD             = $('#card');
+const $CARD_WORD        = $('#card_word');
+const $CARD_DEFINITIONS = $('#card_definitions');
 
 let TOTAL     = 0;
 const HISTORY = [];
@@ -24,13 +26,14 @@ const HISTORY = [];
 const ENABLE  = true;
 const DISABLE = false;
 
-// const DICT_URL     = "https://www.dictionaryapi.com/api/v3/references/computer/json/computer?key=05c306a9-222f-46cd-a1e3-b9b51b472e4f";
-const DICT_DEFINITION_ENDPOINT     = "https://wordsapiv1.p.rapidapi.com/words/";
-const DICT_HEADERS = {
-  "Content-Type": "application/json",
-  "x-rapidapi-key": "181862af8fmshb9990531929a53dp1032ddjsn0c19d24edff3",
+// const DICT_URL     =
+// "https://www.dictionaryapi.com/api/v3/references/computer/json/computer?key=05c306a9-222f-46cd-a1e3-b9b51b472e4f";
+const DICT_DEFINITION_ENDPOINT = "https://wordsapiv1.p.rapidapi.com/words/";
+const DICT_HEADERS             = {
+  "Content-Type"   : "application/json",
+  "x-rapidapi-key" : "181862af8fmshb9990531929a53dp1032ddjsn0c19d24edff3",
   "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
-  "useQueryString": true
+  "useQueryString" : true
 };
 
 const MESSAGES = {
@@ -86,35 +89,28 @@ function cellSize() {
 
 function checkValidWord(word) {
   $.get(`/word/${word}`, function (data) {
-    updateHistory(word, data.result);
+    updateHistory(word, data);
   });
 }
 
-function updateHistory(word, result) {
+function updateHistory(word, data) {
   let points = word.length;
-  if (result !== 'ok') {
+  console.log('data:', data);
+  msg(data.result);
+  if (data.result !== 'ok') {
     points *= -1;
-    msg(result);
-  } else {
-    // $.get(DICT_URL.replace('<word>', word ))
-    $.ajax({
-       url: DICT_DEFINITION_ENDPOINT + word,
-      headers: DICT_HEADERS,
-     method: 'GET'
-    })
-     .done( function( res ){
-        console.log( "definitions:", res);
-        console.log( "results:", res.results);
-        updateDefinitions( res.results );
-    });
   }
   TOTAL += points;
-  HISTORY.push({word, points, total: TOTAL});
+  HISTORY.push({word: word, points, total: TOTAL});
   updateHistoryTable();
+  console.log("card:", data.card);
+  updateDefinitions(data.card);
 }
 
-function updateDefinitions( definitions ){
-  $DEFINITIONS.text(definitions.map( res => res.definition));
+function updateDefinitions(card) {
+  $CARD_WORD.html('<strong>'+card.word+'</strong>');
+  $CARD_DEFINITIONS.html(card.definitions.map(defn => '<li>'+defn+'</li>'));
+
 }
 
 function updateHistoryTable() {

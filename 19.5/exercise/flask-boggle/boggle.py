@@ -21,8 +21,9 @@ class Boggle():
             words = [w.strip() for w in dict_file]
         return words
 
-    def make_board(self):
+    def make_board(self, ncps):
         """Make and return a random boggle board."""
+        self.set_number_of_chars_per_side(ncps)
         self.board = []
         for _ in range(self.ncps):
             row = [choice(string.ascii_uppercase) for i in range(self.ncps)]

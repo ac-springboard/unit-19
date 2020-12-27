@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, jsonify, request
+import json, requests
 
 # from math import floor, ceil
 from boggle import Boggle
@@ -21,6 +22,16 @@ BOARD_AND_TIME = {'3x3': 450, '4x4': 500, '5x5': 750, '6x6': 900}
 
 # This is the variable that triggers the layout
 DEFAULT_GRID = '4x4'
+
+# External Dictionary
+
+DICT_DEFINITION_ENDPOINT = "https://wordsapiv1.p.rapidapi.com/words/{word}"
+DICT_HEADERS = {
+    "Content-Type": "application/json",
+    "x-rapidapi-key": "181862af8fmshb9990531929a53dp1032ddjsn0c19d24edff3",
+    "x-rapidapi-host": "wordsapiv1.p.rapidapi.com",
+    "useQueryString": "true"
+}
 
 
 @app.route('/')
@@ -47,7 +58,7 @@ def root_view():
 
 @app.route('/chars/<int:number_of_chars_per_side>')
 def make_board_ajax(number_of_chars_per_side):
-    board = boggle_game.make_board()
+    board = boggle_game.make_board(number_of_chars_per_side)
     return render_template('board.html', board=board,
                            number_of_chars_per_side=number_of_chars_per_side)
 
@@ -56,7 +67,20 @@ def make_board_ajax(number_of_chars_per_side):
 def check_valid_word_ajax(word):
     result = boggle_game.check_valid_word(word)
     # print('is_valid:', is_valid)
-    json_result = jsonify({'result': result})
+    result_dict = {'result': result}
+    # if result == "ok":
+    url = DICT_DEFINITION_ENDPOINT.format(word=word)
+    print(f"url: {url}")
+    print(DICT_HEADERS)
+    res = requests.get(url, headers=DICT_HEADERS)
+    card = {'word': word, 'definitions': []}
+    if res.status_code == 200:
+        jres = res.json()  # jres will be treated as a dict
+        if jres.get('results', None):
+            defs = [j['definition'] for j in jres['results']]
+            card['definitions'] = defs
+    result_dict['card'] = card
+    json_result = jsonify(result_dict)
     return json_result
 
 

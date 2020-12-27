@@ -65,7 +65,7 @@
 						<div id="word_input_div">
 							<form id="word_form">
 								<div class="form-group">
-								<input class='form-control' name="word_input" value="" placeholder="Type a word..."/>
+									<input class='form-control' name="word_input" value="" placeholder="Type a word..."/>
 								</div>
 								<input id="bt-word-submit" type="submit" class="btn" value="">
 							</form>
@@ -76,7 +76,11 @@
 					</div>
 				</div>
 			</div>
-			<div id="definitions"></div>
+			<div id="card">
+				<div id="card_word"></div>
+				<ul id="card_definitions"></ul>
+				<div id="defns_source">Source of definitions: <a href="https://www.wordsapi.com/">WordsAPI</a></div>
+			</div>
 		</div>
 		{% block init %}
 			<script type="text/javascript">
