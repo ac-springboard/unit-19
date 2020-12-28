@@ -6,25 +6,27 @@
 //                                   //
 ///////////////////////////////////////
 
-const $TIMER_DIV        = $('#timer_div');
-const $BT_CANCEL        = $('#bt-cancel');
-const $BT_PLAY_AGAIN    = $('#bt-play-again');
-const $BT_START         = $('#bt-start');
-const $BT_WORD_SUBMIT   = $('#bt-word-submit');
-const $GRIDS_AND_TIMES  = $('#grids-and-times');
-const $WORD_FORM        = $('#word_form');
-const $BOARD            = $('#board');
-const $MSG_AREA         = $('#msg_area');
-const $FRM              = $('form *');
-const $CARD             = $('#card');
-const $CARD_WORD        = $('#card_word');
-const $CARD_DEFINITIONS = $('#card_definitions');
+const $TIMER_DIV         = $('#timer_div');
+const $BT_CANCEL         = $('#bt-cancel');
+const $BT_PLAY_AGAIN     = $('#bt-play-again');
+const $BT_START          = $('#bt-start');
+const $BT_WORD_SUBMIT    = $('#bt-word-submit');
+const $GRIDS_AND_TIMES   = $('#grids-and-times');
+const $WORD_FORM         = $('#word_form');
+const $BOARD             = $('#board');
+const $MSG_AREA          = $('#msg_area');
+const $FRM               = $('form *');
+const $CARD              = $('#card');
+const $CARD_WORD         = $('#card_word');
+const $CARD_DEFINITIONS  = $('#card_definitions');
+const $HISTORY_TABLE_DIV = $('#history_table_div');
+const $HISTORY_TABLE     = $('#history_table');
 
-let TOTAL     = 0;
-const HISTORY = [];
-
-const ENABLE  = true;
-const DISABLE = false;
+let total        = 0;
+let board_height = 0;
+const HISTORY    = [];
+const ENABLE     = true;
+const DISABLE    = false;
 
 // const DICT_URL     =
 // "https://www.dictionaryapi.com/api/v3/references/computer/json/computer?key=05c306a9-222f-46cd-a1e3-b9b51b472e4f";
@@ -65,9 +67,10 @@ $(document).ready(function () {
   showOneButton($BT_START);
   selectToInitialTime();
   updateTime();
-  cellSize();
+  adjustSizes();
   setElemState($FRM, DISABLE);
-  $(window).resize(cellSize);
+  $(window).resize(adjustSizes);
+
 });
 
 ///////////////////////////////////////
@@ -76,7 +79,7 @@ $(document).ready(function () {
 //                                   //
 ///////////////////////////////////////
 
-function cellSize() {
+function adjustSizes() {
   $('.char_cell').each(function () {
     const w = $(this).width();
     const h = $(this).height();
@@ -85,6 +88,9 @@ function cellSize() {
     // $(this).height($(this).width());
 
   });
+  board_height = $BOARD.height();
+  $HISTORY_TABLE_DIV.height(board_height);
+
 }
 
 function checkValidWord(word) {
@@ -100,21 +106,21 @@ function updateHistory(word, data) {
   if (data.result !== 'ok') {
     points *= -1;
   }
-  TOTAL += points;
-  HISTORY.push({word: word, points, total: TOTAL});
+  total += points;
+  HISTORY.push({word: word, points, total: total});
   updateHistoryTable();
   console.log("card:", data.card);
   updateDefinitions(data.card);
 }
 
 function updateDefinitions(card) {
-  $CARD_WORD.html('<strong>'+card.word+'</strong>');
-  $CARD_DEFINITIONS.html(card.definitions.map(defn => '<li>'+defn+'</li>'));
-
+  $CARD_WORD.html('<strong>' + card.word + '</strong>');
+  $CARD_DEFINITIONS.html(card.definitions.map(defn => '<li>' + defn + '</li>'));
 }
 
 function updateHistoryTable() {
   console.log(HISTORY);
+
 }
 
 async function make_board_ajax() {
@@ -219,3 +225,7 @@ $WORD_FORM.on('submit', function (e) {
   checkValidWord(word);
   // return false;
 });
+
+window.onresize = function () {
+  console.log("window resized");
+};

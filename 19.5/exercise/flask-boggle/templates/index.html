@@ -35,9 +35,13 @@
 					<div id="above_board" class="col-{{ board_size_in_cols }} border rounded m-1">
 						<div id="msg_area"></div>
 					</div>
-					<div id="above_table" class="col-{{ lateral_area_width_in_cols }} border rounded
+					<div id="above_table" class="col-{{ lateral_area_width_in_cols }}
 				m-1">
-
+						<table id="history_table" >
+							<tbody id="history_table_head">
+								<tr><td>Word</td><td>Points</td><td>Total</td></tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 				<div class="{{ row_class }}">
@@ -48,8 +52,32 @@
 					<div id="board" class="col-{{ board_size_in_cols }} rounded p-0 m-1">
 						{% include 'board.html' %}
 					</div>
-					<div id="table" class="col-{{ lateral_area_width_in_cols }} border rounded m-1">
-
+					<div id="history_table_div" class="col-{{ lateral_area_width_in_cols }} border rounded m-2">
+							<table id="history_table" >
+								{#<thead id="history_table_head">#}
+								{#	<th>Word</th><th>Points</th><th>Total</th>#}
+								{#</thead>#}
+								<tbody id="history_table_body"></tbody>
+								<tr><td>a</td><td>b</td><td>c</td></tr>
+								<tr><td>a</td><td>b</td><td>c</td></tr>
+								<tr><td>a</td><td>b</td><td>c</td></tr>
+								<tr><td>a</td><td>b</td><td>c</td></tr>
+								<tr><td>a</td><td>b</td><td>c</td></tr>
+								<tr><td>a</td><td>b</td><td>c</td></tr>
+								<tr><td>a</td><td>b</td><td>c</td></tr>
+								<tr><td>a</td><td>b</td><td>c</td></tr>
+								<tr><td>a</td><td>b</td><td>c</td></tr>
+								<tr><td>a</td><td>b</td><td>c</td></tr>
+								<tr><td>a</td><td>b</td><td>c</td></tr>
+								<tr><td>a</td><td>b</td><td>c</td></tr>
+								<tr><td>a</td><td>b</td><td>c</td></tr>
+								<tr><td>a</td><td>b</td><td>c</td></tr>
+								<tr><td>a</td><td>b</td><td>c</td></tr>
+								<tr><td>a</td><td>b</td><td>c</td></tr>
+								<tr><td>a</td><td>b</td><td>c</td></tr>
+								<tr><td>a</td><td>b</td><td>c</td></tr>
+								<tr><td>a</td><td>b</td><td>c</td></tr>
+							</table>
 					</div>
 				</div>
 				<div class="{{ row_class }}">
@@ -59,7 +87,6 @@
 								<option value='{{ k }}' time={{ v }}>{{ k }} ({{ v }}s)</option>
 							{% endfor %}
 						</select>
-
 					</div>
 					<div id="below_board" class="col-{{ board_size_in_cols }} border rounded m-1">
 						<div id="word_input_div">

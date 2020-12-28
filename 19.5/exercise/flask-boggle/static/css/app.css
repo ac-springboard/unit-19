@@ -43,7 +43,7 @@ div[id^="bt-"] {
 	text-align    : center;
 	/*padding: 2rem;*/
 	font-size     : 5vw;
-	border        : 1px solid red;
+	/*border        : 1px solid red;*/
 	width         : 12vw;
 	height        : 12vw;
 	line-height   : 12vw;
@@ -163,4 +163,37 @@ li {
 .form-control{
 	text-align: center !important;
 	font-size: 2vw;
+	}
+
+
+#above_table{
+	vertical-align: middle;
+	padding: 2vw 0 0 0;
+	}
+#history_table_div {
+	/*margin-left: 3vw !important;*/
+	overflow: auto;
+	padding: 0;
+	}
+
+#history_table{
+	font-size: 2vw;
+	/*positon: sticky;*/
+	/*top: 0;*/
+	}
+
+#history_table thead{
+	/*position: sticky;*/
+	/*top: 0;*/
+	vertical-align: middle;
+	}
+#history_table tbody{
+	/*position: relative;*/
+	/*top: 4vw;*/
+	}
+#th, td{
+	min-width: 6vw;
+	margin: 0.5vw;
+	text-align: center;
+	border: 1px solid red;
 	}
