@@ -6,21 +6,21 @@
 //                                   //
 ///////////////////////////////////////
 
-const $TIMER_DIV         = $('#timer_div');
-const $BT_CANCEL         = $('#bt-cancel');
-const $BT_PLAY_AGAIN     = $('#bt-play-again');
-const $BT_START          = $('#bt-start');
-const $BT_WORD_SUBMIT    = $('#bt-word-submit');
-const $GRIDS_AND_TIMES   = $('#grids-and-times');
-const $WORD_FORM         = $('#word_form');
-const $BOARD             = $('#board');
-const $MSG_AREA          = $('#msg_area');
-const $FRM               = $('form *');
-const $CARD              = $('#card');
-const $CARD_WORD         = $('#card_word');
-const $CARD_DEFINITIONS  = $('#card_definitions');
-const $HISTORY_TABLE_DIV = $('#history_table_div');
-const $HISTORY_TABLE     = $('#history_table');
+const $TIMER_DIV          = $('#timer_div');
+const $BT_CANCEL          = $('#bt-cancel');
+const $BT_PLAY_AGAIN      = $('#bt-play-again');
+const $BT_START           = $('#bt-start');
+const $BT_WORD_SUBMIT     = $('#bt-word-submit');
+const $GRIDS_AND_TIMES    = $('#grids-and-times');
+const $WORD_FORM          = $('#word_form');
+const $BOARD              = $('#board');
+const $MSG_AREA           = $('#msg_area');
+const $FRM                = $('form *');
+const $CARD               = $('#card');
+const $CARD_WORD          = $('#card_word');
+const $CARD_DEFINITIONS   = $('#card_definitions');
+const $HISTORY_TABLE_DIV  = $('#history_table_div');
+const $HISTORY_TABLE_BODY = $('#history_table_body');
 
 let total        = 0;
 let board_height = 0;
@@ -120,6 +120,9 @@ function updateDefinitions(card) {
 
 function updateHistoryTable() {
   console.log(HISTORY);
+  const last        = HISTORY[HISTORY.length - 1];
+  const table_entry = `<tr><td>${last.word}</td><td>${last.points}</td><td>${last.total}</td></tr>`;
+  $HISTORY_TABLE_BODY.append(table_entry);
 
 }
 
